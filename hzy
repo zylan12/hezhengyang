@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOME家庭 - 我们的温馨港湾</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#D2691E', // 温暖的橙棕色主色调
+            secondary: '#FFD700', // 金色辅助色
+            accent: '#8B4513', // 深棕色强调色
+            neutral: '#FFF8DC', // 米白色背景
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Ma Shan Zheng"', 'cursive'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+      }
+      .section-padding {
+        @apply py-16 md:py-24;
+      }
+      .loading {
+        @apply flex items-center justify-center animate-spin text-primary text-2xl;
+      }
+    }
+  </style>
+</head>
+<body class="bg-neutral text-gray-800 min-h-screen flex flex-col">
+  <!-- 导航栏 -->
+  <header class="bg-primary/95 text-white sticky top-0 z-50 backdrop-blur-md shadow-md">
+    <div class="container mx-auto px-4 py-3">
+      <div class="flex justify-between items-center">
+        <a href="#" class="flex items-center space-x-2">
+          <i class="fa fa-home text-2xl"></i>
+          <span class="text-xl font-bold">HOME家庭</span>
+        </a>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex space-x-8">
+          <a href="#home" class="hover:text-secondary transition-colors duration-300">首页</a>
+          <a href="#family" class="hover:text-secondary transition-colors duration-300">家庭成员</a>
+          <a href="#gallery" class="hover:text-secondary transition-colors duration-300">家庭相册</a>
+          <a href="#events" class="hover:text-secondary transition-colors duration-300">活动日历</a>
+          <a href="#stories" class="hover:text-secondary transition-colors duration-300">家庭故事</a>
+          <a href="#contact" class="hover:text-secondary transition-colors duration-300">联系我们</a>
+          <button id="login-btn" class="ml-4 bg-secondary hover:bg-secondary/80 text-accent font-bold py-2 px-4 rounded-full transition-colors">
+            登录
+          </button>
+        </nav>
+        
+        <!-- 移动端菜单按钮 -->
+        <button class="md:hidden text-2xl" id="menuBtn">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div class="md:hidden bg-primary/98 hidden transition-all duration-300" id="mobileMenu">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#home" class="hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">首页</a>
+        <a href="#family" class="hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">家庭成员</a>
+        <a href="#gallery" class="hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">家庭相册</a>
+        <a href="#events" class="hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">活动日历</a>
+        <a href="#stories" class="hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">家庭故事</a>
+        <a href="#contact" class="hover:text-secondary transition-colors duration-300 py-2">联系我们</a>
+        <button id="mobile-login-btn" class="mt-2 bg-secondary hover:bg-secondary/80 text-accent font-bold py-2 px-4 rounded-full transition-colors">
+            登录
+          </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 登录模态框 -->
+  <div id="login-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-primary">登录家庭网站</h3>
+        <button id="close-login" class="text-gray-400 hover:text-gray-600">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="login-username" class="block text-gray-700 font-medium mb-2">用户名</label>
+          <input type="text" id="login-username" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all" placeholder="请输入用户名">
+        </div>
+        <div>
+          <label for="login-password" class="block text-gray-700 font-medium mb-2">密码</label>
+          <input type="password" id="login-password" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all" placeholder="请输入密码">
+        </div>
+        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center">
+          <i class="fa fa-sign-in mr-2"></i> 登录
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 主内容区 -->
+  <main class="flex-grow">
+    <!-- 首页/欢迎区 -->
+    <section id="home" class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style="background-image: url('https://picsum.photos/id/1067/1920/1080');">
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="container mx-auto px-4 relative z-10 text-center">
+        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-6 text-shadow">欢迎来到HOME家庭</h1>
+        <p class="text-[clamp(1rem,2vw,1.5rem)] text-white/90 mb-10 max-w-3xl mx-auto text-shadow">这里记录着我们的生活点滴，分享爱与温暖的家庭故事</p>
+        <a href="#family" class="bg-secondary hover:bg-secondary/80 text-accent font-bold py-3 px-8 rounded-full inline-block transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          认识我们的家人 <i class="fa fa-arrow-down ml-2"></i>
+        </a>
+      </div>
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#family" class="text-white text-3xl opacity-80 hover:opacity-100 transition-opacity">
+          <i class="fa fa-angle-down"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- 家庭成员介绍 -->
+    <section id="family" class="section-padding bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-primary mb-4">家庭成员</h2>
+          <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-gray-600 max-w-2xl mx-auto">我们是相亲相爱的一家人，每个人都有独特的故事</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="family-members-container">
+          <!-- 加载中提示 -->
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 家庭相册 -->
+    <section id="gallery" class="section-padding bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-primary mb-4">家庭相册</h2>
+          <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-gray-600 max-w-2xl mx-auto">记录生活中的美好瞬间，每一张照片都承载着珍贵回忆</p>
+        </div>
+
+        <!-- 相册过滤 -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <button class="gallery-filter-btn active bg-primary text-white py-2 px-6 rounded-full hover:bg-primary/90 transition-colors" data-filter="all">全部</button>
+          <button class="gallery-filter-btn bg-gray-200 text-gray-700 py-2 px-6 rounded-full hover:bg-gray-300 transition-colors" data-filter="family">全家福</button>
+          <button class="gallery-filter-btn bg-gray-200 text-gray-700 py-2 px-6 rounded-full hover:bg-gray-300 transition-colors" data-filter="outdoor">户外活动</button>
+          <button class="gallery-filter-btn bg-gray-200 text-gray-700 py-2 px-6 rounded-full hover:bg-gray-300 transition-colors" data-filter="holiday">节日</button>
+          <button class="gallery-filter-btn bg-gray-200 text-gray-700 py-2 px-6 rounded-full hover:bg-gray-300 transition-colors" data-filter="kids">孩子成长</button>
+        </div>
+
+        <!-- 相册网格 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+          <!-- 加载中提示 -->
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <div class="text-center mt-12">
+          <button id="load-more" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+            加载更多照片 <i class="fa fa-refresh ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动日历 -->
+    <section id="events" class="section-padding bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-primary mb-4">活动日历</h2>
+          <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-gray-600 max-w-2xl mx-auto">记录家庭重要活动，不错过每一个温馨时刻</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10" id="events-container">
+          <!-- 加载中提示 -->
+          <div class="lg:col-span-2 col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+          <div class="lg:col-span-1 flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 家庭故事 -->
+    <section id="stories" class="section-padding bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-primary mb-4">家庭故事</h2>
+          <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-gray-600 max-w-2xl mx-auto">记录那些值得永远珍藏的家庭回忆与感动时刻</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10" id="stories-container">
+          <!-- 加载中提示 -->
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查看更多故事按钮 -->
+        <div class="text-center mt-12">
+          <button id="load-more-stories" class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+            查看更多故事 <i class="fa fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="section-padding bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-primary mb-4">联系我们</h2>
+          <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+          <p class="text-gray-600 max-w-2xl mx-auto">有什么想分享的？填写下面的表单，给我们留言吧</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <!-- 联系表单 -->
+          <div class="bg-neutral rounded-xl shadow-lg p-8">
+            <h3 class="text-xl font-bold text-primary mb-6">发送消息</h3>
+            
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="block text-gray-700 font-medium mb-2">姓名</label>
+                  <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all" placeholder="请输入您的姓名">
+                </div>
+                <div>
+                  <label for="email" class="block text-gray-700 font-medium mb-2">邮箱</label>
+                  <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all" placeholder="请输入您的邮箱">
+                </div>
+              </div>
+              
+              <div>
+                <label for="subject" class="block text-gray-700 font-medium mb-2">主题</label>
+                <input type="text" id="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all" placeholder="请输入消息主题">
+              </div>
+              
+              <div>
+                <label for="message" class="block text-gray-700 font-medium mb-2">消息</label>
+                <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 outline-none transition-all resize-none" placeholder="请输入您的消息内容"></textarea>
+              </div>
+              
+              <div>
+                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center">
+                  <i class="fa fa-paper-plane mr-2"></i> 发送消息
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <!-- 联系信息和地图 -->
+          <div class="flex flex-col space-y-10">
+            <!-- 联系信息 -->
+            <div class="bg-neutral rounded-xl shadow-lg p-8">
+              <h3 class="text-xl font-bold text-primary mb-6">联系方式</h3>
+              
+              <div class="space-y-6">
+                <div class="flex items-start">
+                  <div class="bg-primary/10 text-primary rounded-full w-12 h-12 flex items-center justify-center mr-4 shrink-0">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">家庭住址</h4>
+                    <p class="text-gray-600">广东省东莞市横横沥镇 碧桂园松湖明珠</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="bg-primary/10 text-primary rounded-full w-12 h-12 flex items-center justify-center mr-4 shrink-0">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">电话联系</h4>
+                    <p class="text-gray-600" id="phone1">151-1335-7640</p>
+                    <p class="text-gray-600" id="phone2">147-8951-4962</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="bg-primary/10 text-primary rounded-full w-12 h-12 flex items-center justify-center mr-4 shrink-0">
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">电子邮箱</h4>
+                    <p class="text-gray-600" id="email-address">hezhengyang@foxmail.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start">
+                  <div class="bg-primary/10 text-primary rounded-full w-12 h-12 flex items-center justify-center mr-4 shrink-0">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-800 mb-1">家庭开放时间</h4>
+                    <p class="text-gray-600">每周日下午2:00-5:00 欢迎来访</p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 社交媒体 -->
+              <div class="mt-8">
+                <h4 class="font-bold text-gray-800 mb-4">关注我们</h4>
+                <div class="flex space-x-4">
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa fa-weixin"></i>
+                  </a>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa fa-weibo"></i>
+                  </a>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                  <a href="#" class="bg-primary hover:bg-primary/90 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa fa-youtube-play"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 地图占位 -->
+            <div class="bg-neutral rounded-xl shadow-lg overflow-hidden h-80">
+              <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                <div class="text-center p-4">
+                  <i class="fa fa-map-o text-4xl text-gray-400 mb-2"></i>
+                  <p class="text-gray-500">家庭位置地图将在这里显示</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <!-- 关于我们 -->
+        <div>
+          <h3 class="text-xl font-bold mb-6">关于我们</h3>
+          <p class="text-white/80 mb-6">这是一个充满爱与温暖的大家庭，三代同堂，其乐融融。这个网站记录着我们的生活点滴，分享家庭的幸福与感动。</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white/80 hover:text-white transition-colors">
+              <i class="fa fa-weixin"></i>
+            </a>
+            <a href="#" class="text-white/80 hover:text-white transition-colors">
+              <i class="fa fa-weibo"></i>
+            </a>
+            <a href="#" class="text-white/80 hover:text-white transition-colors">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="text-white/80 hover:text-white transition-colors">
+              <i class="fa fa-youtube-play"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 快速链接 -->
+        <div>
+          <h3 class="text-xl font-bold mb-6">快速链接</h3>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-white/80 hover:text-white transition-colors">首页</a></li>
+            <li><a href="#family" class="text-white/80 hover:text-white transition-colors">家庭成员</a></li>
+            <li><a href="#gallery" class="text-white/80 hover:text-white transition-colors">家庭相册</a></li>
+            <li><a href="#events" class="text-white/80 hover:text-white transition-colors">活动日历</a></li>
+            <li><a href="#stories" class="text-white/80 hover:text-white transition-colors">家庭故事</a></li>
+            <li><a href="#contact" class="text-white/80 hover:text-white transition-colors">联系我们</a></li>
+          </ul>
+        </div>
+        
+        <!-- 最新动态 -->
+        <div>
+          <h3 class="text-xl font-bold mb-6">最新动态</h3>
+          <ul class="space-y-4" id="latest-news">
+            <li class="flex">
+              <div class="bg-secondary/20 text-accent rounded-full w-10 h-10 flex items-center justify-center mr-3 shrink-0">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <div>
+                <p class="text-white/80">何乐章已经庆祝了3岁生日</p>
+                <p class="text-white/60 text-sm">2025-06-20</p>
+              </div>
+            </li>
+            <li class="flex">
+              <div class="bg-secondary/20 text-accent rounded-full w-10 h-10 flex items-center justify-center mr-3 shrink-0">
+                <i class="fa fa-trophy"></i>
+              </div>
+              <div>
+                <p class="text-white/80">何正阳设计作品获国际奖项</p>
+                <p class="text-white/60 text-sm">2025-06-15</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- 订阅 -->
+        <div>
+          <h3 class="text-xl font-bold mb-6">订阅更新</h3>
+          <p class="text-white/80 mb-4">订阅我们的家庭动态，第一时间获取最新消息</p>
+          <form id="subscribe-form" class="space-y-3">
+            <div>
+              <input type="email" placeholder="您的邮箱地址" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-secondary">
+            </div>
+            <button type="submit" class="w-full bg-secondary hover:bg-secondary/90 text-accent font-bold py-3 px-6 rounded-lg transition-colors">
+              订阅更新
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/20 mt-12 pt-8 text-center">
+        <p class="text-white/70">&copy; 2025 家庭网站 - 保留所有权利</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 照片查看模态框 -->
+  <div id="photo-modal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-300">
+    <button id="close-modal" class="absolute top-6 right-6 text-white text-3xl hover:text-secondary transition-colors">
+      <i class="fa fa-times"></i>
+    </button>
+    <div class="max-w-4xl w-full mx-4">
+      <img id="modal-image" src="" alt="大图预览" class="w-full h-auto max-h-[80vh] object-contain">
+      <div class="mt-4 text-center">
+        <h3 id="modal-title" class="text-white text-xl font-bold"></h3>
+        <p id="modal-description" class="text-white/80"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 返回顶部按钮 -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-40">
+    <i class="fa fa-chevron-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // API配置
+    const API_BASE_URL = 'http://localhost:5000/api';
+    let accessToken = localStorage.getItem('access_token');
+
+    // DOM元素
+    const familyMembersContainer = document.getElementById('family-members-container');
+    const galleryGrid = document.getElementById('gallery-grid');
+    const eventsContainer = document.getElementById('events-container');
+    const storiesContainer = document.getElementById('stories-container');
+    const latestNews = document.getElementById('latest-news');
+    const phone1 = document.getElementById('phone1');
+    const phone2 = document.getElementById('phone2');
+    const emailAddress = document.getElementById('email-address');
+
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2', 'shadow-md');
+        navbar.classList.remove('py-3');
+      } else {
+        navbar.classList.add('py-3');
+        navbar.classList.remove('py-2', 'shadow-md');
+      }
+    });
+
+    // 移动端菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (mobileMenu.classList.contains('hidden')) {
+        menuBtn.innerHTML = '<i class="fa fa-bars"></i>;
+      } else {
+        menuBtn.innerHTML = '<i class="fa fa-times"></i>;
+      }
+    });
+
+    // 登录模态框
+    const loginModal = document.getElementById('login-modal');
+    const loginBtn = document.getElementById('login-btn');
+    const mobileLoginBtn = document.getElementById('mobile-login-btn');
+    const closeLogin = document.getElementById('close-login');
+    const loginForm = document.getElementById('login-form');
+
+    function openLoginModal() {
+      loginModal.classList.remove('opacity-0', 'invisible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLoginModal() {
+      loginModal.classList.add('opacity-0', 'invisible');
+      document.body.style.overflow = '';
+    }
+
+    loginBtn.addEventListener('click', openLoginModal);
+    mobileLoginBtn.addEventListener('click', openLoginModal);
+    closeLogin.addEventListener('click', closeLoginModal);
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        closeLoginModal();
+      }
+    });
+
+    // 登录功能
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      
+      if (!username || !password) {
+        alert('请输入用户名和密码');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          accessToken = data.access_token;
+          localStorage.setItem('access_token', accessToken);
+          alert('登录成功');
+          closeLoginModal();
+          // 刷新页面或执行其他操作
+        } else {
+          alert(data.msg || '登录失败，请检查用户名和密码');
+        }
+      } catch (error) {
+        console.error('登录请求错误:', error);
+        alert('登录请求失败，请稍后再试');
+      }
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // 关闭移动菜单
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          menuBtn.innerHTML = '<i class="fa fa-bars"></i>;
+        }
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // 返回顶部按钮
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+        backToTopBtn.classList.add('translate-y-0', 'opacity-100');
+      } else {
+        backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+        backToTopBtn.classList.remove('translate-y-0', 'opacity-100');
+      }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 获取家庭成员
+    async function fetchFamilyMembers() {
+      try {
+        familyMembersContainer.innerHTML = `
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        `;
+        
+        const response = await fetch(`${API_BASE_URL}/family-members`);
+        const members = await response.json();
+        
+        if (members.length === 0) {
+          familyMembersContainer.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <i class="fa fa-user-plus text-4xl text-gray-400 mb-4"></i>
+              <p class="text-gray-500">暂无家庭成员数据</p>
+            </div>
+          `;
+          return;
+        }
+        
+        familyMembersContainer.innerHTML = members.map(member => `
+          <div class="bg-neutral rounded-xl overflow-hidden shadow-lg card-hover">
+            <div class="relative h-64 overflow-hidden">
+              <img src="${member.photo || 'https://picsum.photos/600/400?random=' + member.id}" alt="${member.name}" class="w-full h-full object-cover">
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <h3 class="text-xl font-bold text-white">${member.name}</h3>
+                <p class="text-white/90">${member.relationship}</p>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-700 mb-4">${member.description || '暂无个人描述'}</p>
+              <div class="flex space-x-3 text-accent">
+                <a href="#" class="hover:text-primary transition-colors"><i class="fa fa-wechat"></i></a>
+                <a href="#" class="hover:text-primary transition-colors"><i class="fa fa-phone"></i></a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+      } catch (error) {
+        console.error('获取家庭成员数据失败:', error);
+        familyMembersContainer.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <p class="text-gray-500">获取家庭成员数据失败，请稍后再试</p>
+          </div>
+        `;
+      }
+    }
+
+    // 获取相册照片
+    async function fetchPhotos(filter = 'all') {
+      try {
+        galleryGrid.innerHTML = `
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        `;
+        
+        let url = `${API_BASE_URL}/photos`;
+        if (filter !== 'all') {
+          url += `?category=${filter}`;
+        }
+        
+        const response = await fetch(url);
+        const photos = await response.json();
+        
+        if (photos.length === 0) {
+          galleryGrid.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <i class="fa fa-image text-4xl text-gray-400 mb-4"></i>
+              <p class="text-gray-500">暂无照片数据</p>
+            </div>
+          `;
+          return;
+        }
+        
+        galleryGrid.innerHTML = photos.map(photo => `
+          <div class="gallery-item ${photo.category}" data-category="${photo.category}">
+            <div class="relative overflow-hidden rounded-xl shadow-md group">
+              <img src="${photo.image_url}" alt="${photo.title}" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div class="text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 class="text-white text-xl font-bold mb-2">${photo.title}</h3>
+                  <p class="text-white/80 mb-4">${photo.description}</p>
+                  <button class="view-photo-btn bg-secondary hover:bg-secondary/80 text-accent font-bold py-2 px-4 rounded-full transition-colors" data-id="${photo.id}">
+                    <i class="fa fa-search-plus mr-2"></i>查看大图
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+        // 绑定查看照片事件
+        document.querySelectorAll('.view-photo-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const photoId = e.target.getAttribute('data-id');
+            const photo = photos.find(p => p.id == photoId);
+            if (photo) {
+              openPhotoModal(photo);
+            }
+          });
+        });
+        
+      } catch (error) {
+        console.error('获取照片数据失败:', error);
+        galleryGrid.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <p class="text-gray-500">获取照片数据失败，请稍后再试</p>
+          </div>
+        `;
+      }
+    }
+
+    // 获取活动日历
+    async function fetchEvents() {
+      try {
+        eventsContainer.innerHTML = `
+          <div class="lg:col-span-2 col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+          <div class="lg:col-span-1 flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        `;
+        
+        const response = await fetch(`${API_BASE_URL}/events`);
+        const events = await response.json();
+        
+        if (events.length === 0) {
+          eventsContainer.innerHTML = `
+            <div class="lg:col-span-2 col-span-full text-center py-12">
+              <i class="fa fa-calendar text-4xl text-gray-400 mb-4"></i>
+              <p class="text-gray-500">暂无活动数据</p>
+            </div>
+            <div class="lg:col-span-1 text-center py-12">
+              <i class="fa fa-calendar text-4xl text-gray-400 mb-4"></i>
+              <p class="text-gray-500">暂无活动数据</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // 生成日历视图 (简化版，实际项目中需要完整日历逻辑)
+        const calendarHTML = `
+          <div class="lg:col-span-2 bg-neutral rounded-xl shadow-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+
+              <h3 class="text-xl font-bold text-primary" id="current-month">2025年6月</h3>
+              <div class="flex space-x-2">
+                <button id="prev-month" class="bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full transition-colors">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
+                <button id="next-month" class="bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full transition-colors">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- 日历网格 -->
+            <div class="grid grid-cols-7 gap-1">
+              <!-- 星期标题 -->
+              <div class="text-center font-bold text-gray-500 py-2">周日</div>
+              <div class="text-center font-bold text-gray-500 py-2">周一</div>
+              <div class="text-center font-bold text-gray-500 py-2">周二</div>
+              <div class="text-center font-bold text-gray-500 py-2">周三</div>
+              <div class="text-center font-bold text-gray-500 py-2">周四</div>
+              <div class="text-center font-bold text-gray-500 py-2">周五</div>
+              <div class="text-center font-bold text-gray-500 py-2">周六</div>
+
+              <!-- 上个月的日期 -->
+              <div class="text-center text-gray-400 py-3">28</div>
+              <div class="text-center text-gray-400 py-3">29</div>
+              <div class="text-center text-gray-400 py-3">30</div>
+              <div class="text-center text-gray-400 py-3">31</div>
+
+              <!-- 当月的日期 -->
+              <div class="text-center py-3">1</div>
+              <div class="text-center py-3">2</div>
+              <div class="text-center py-3">3</div>
+              <div class="text-center py-3">4</div>
+              <div class="text-center py-3">5</div>
+              <div class="text-center py-3">6</div>
+              <div class="text-center py-3">7</div>
+              <div class="text-center py-3">8</div>
+              <div class="text-center py-3">9</div>
+              <div class="text-center py-3">10</div>
+              <div class="text-center py-3">11</div>
+              <div class="text-center py-3">12</div>
+              <div class="text-center py-3">13</div>
+              <div class="text-center py-3">14</div>
+              <div class="text-center py-3">15</div>
+              <div class="text-center py-3">16</div>
+              <div class="text-center py-3">17</div>
+              <div class="text-center py-3">18</div>
+              <div class="text-center py-3">19</div>
+              <div class="text-center py-3">20</div>
+              <div class="text-center py-3">21</div>
+              <div class="text-center py-3">22</div>
+              <div class="text-center py-3">23</div>
+              <div class="text-center py-3">24</div>
+              <div class="text-center bg-accent text-white rounded-full w-10 h-10 mx-auto flex items-center justify-center font-bold">25</div>
+              ${events.map(event => {
+                const date = new Date(event.date);
+                const day = date.getDate();
+                return `
+                  <div class="text-center py-3 relative group">
+                    ${day}
+                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-black text-white p-2 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                      <p class="text-sm font-medium">${event.title}</p>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+              <!-- 下个月的日期 -->
+              <div class="text-center text-gray-400 py-3">1</div>
+              <div class="text-center text-gray-400 py-3">2</div>
+              <div class="text-center text-gray-400 py-3">3</div>
+              <div class="text-center text-gray-400 py-3">4</div>
+              <div class="text-center text-gray-400 py-3">5</div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-1 bg-neutral rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-primary mb-6">即将到来的活动</h3>
+            
+            <div class="space-y-6">
+              ${events.map(event => `
+                <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-accent">
+                  <div class="flex items-center mb-2">
+                    <div class="bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                      <i class="fa fa-birthday-cake"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold">${event.title}</h4>
+                      <p class="text-sm text-gray-500">${formatDate(event.date)}</p>
+                    </div>
+                  </div>
+                  <p class="text-gray-700 text-sm">${event.description}</p>
+                </div>
+              `).join('')}
+            </div>
+
+            <button id="add-event" class="mt-8 w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+              <i class="fa fa-plus-circle mr-2"></i> 添加新活动
+            </button>
+          </div>
+        `;
+        
+        eventsContainer.innerHTML = calendarHTML;
+        
+        // 月份切换按钮
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        let currentMonth = 6;
+        let currentYear = 2025;
+        
+        prevMonthBtn.addEventListener('click', () => {
+          currentMonth--;
+          if (currentMonth < 1) {
+            currentMonth = 12;
+            currentYear--;
+          }
+          document.getElementById('current-month').textContent = `${currentYear}年${currentMonth}月`;
+          // 实际项目中需要重新获取对应月份的活动
+        });
+        
+        nextMonthBtn.addEventListener('click', () => {
+          currentMonth++;
+          if (currentMonth > 12) {
+            currentMonth = 1;
+            currentYear++;
+          }
+          document.getElementById('current-month').textContent = `${currentYear}年${currentMonth}月`;
+          // 实际项目中需要重新获取对应月份的活动
+        });
+        
+        // 添加新活动按钮
+        document.getElementById('add-event').addEventListener('click', () => {
+          if (!accessToken) {
+            openLoginModal();
+            return;
+          }
+          alert('活动添加功能将在未来版本中实现');
+        });
+        
+      } catch (error) {
+        console.error('获取活动数据失败:', error);
+        eventsContainer.innerHTML = `
+          <div class="lg:col-span-2 col-span-full text-center py-12">
+            <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <p class="text-gray-500">获取活动数据失败，请稍后再试</p>
+          </div>
+          <div class="lg:col-span-1 text-center py-12">
+            <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <p class="text-gray-500">获取活动数据失败，请稍后再试</p>
+          </div>
+        `;
+      }
+    }
+
+    // 获取家庭故事
+    async function fetchStories() {
+      try {
+        storiesContainer.innerHTML = `
+          <div class="col-span-full flex justify-center my-12">
+            <div class="loading">
+              <i class="fa fa-spinner"></i>
+            </div>
+          </div>
+        `;
+        
+        const response = await fetch(`${API_BASE_URL}/stories`);
+        const stories = await response.json();
+        
+        if (stories.length === 0) {
+          storiesContainer.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <i class="fa fa-book text-4xl text-gray-400 mb-4"></i>
+              <p class="text-gray-500">暂无家庭故事数据</p>
+            </div>
+          `;
+          return;
+        }
+        
+        storiesContainer.innerHTML = stories.map(story => `
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden group">
+            <div class="relative h-64">
+              <img src="${story.image_url || 'https://picsum.photos/800/400?random=' + story.id}" alt="${story.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 p-6">
+                <span class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">${formatDate(story.created_at)}</span>
+                <h3 class="text-white text-xl font-bold mt-2">${story.title}</h3>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-gray-700 mb-4">${story.content.substring(0, 150)}...</p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <img src="https://picsum.photos/100/100?random=${story.author_id}" alt="${story.author}" class="w-10 h-10 rounded-full object-cover mr-3">
+                  <span class="text-gray-600">${story.author}</span>
+                </div>
+                <div class="flex space-x-3">
+                  <button class="text-gray-400 hover:text-primary transition-colors">
+                    <i class="fa fa-heart-o"></i> ${Math.floor(Math.random() * 30) + 10}
+                  </button>
+                  <button class="text-gray-400 hover:text-primary transition-colors">
+                    <i class="fa fa-comment-o"></i> ${Math.floor(Math.random() * 15) + 5}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+      } catch (error) {
+        console.error('获取家庭故事数据失败:', error);
+        storiesContainer.innerHTML = `
+          <div class="col-span-full text-center py-12">
+            <i class="fa fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <p class="text-gray-500">获取家庭故事数据失败，请稍后再试</p>
+          </div>
+        `;
+      }
+    }
+
+    // 获取最新动态
+    async function fetchLatestNews() {
+      try {
+        // 这里简化处理，实际项目中应从API获取
+        const response = await fetch(`${API_BASE_URL}/stories?limit=2`);
+        const stories = await response.json();
+        
+        if (stories.length > 0) {
+          latestNews.innerHTML = stories.map(story => `
+            <li class="flex">
+              <div class="bg-secondary/20 text-accent rounded-full w-10 h-10 flex items-center justify-center mr-3 shrink-0">
+                <i class="fa fa-trophy"></i>
+              </div>
+              <div>
+                <p class="text-white/80">${story.title}</p>
+                <p class="text-white/60 text-sm">${formatDate(story.created_at)}</p>
+              </div>
+            </li>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('获取最新动态失败:', error);
+      }
+    }
+
+    // 获取联系信息
+    async function fetchContactInfo() {
+      try {
+        // 这里简化处理，实际项目中应从API获取
+        const response = await fetch(`${API_BASE_URL}/family-members`);
+        const members = await response.json();
+        
+        if (members.length > 0) {
+          const father = members.find(m => m.relationship.includes('丈夫'));
+          const mother = members.find(m => m.relationship.includes('妻子'));
+          
+          if (father && mother) {
+            phone1.textContent = father.occupation || '151-1335-7640';
+            phone2.textContent = mother.occupation || '147-8951-4962';
+          }
+        }
+      } catch (error) {
+        console.error('获取联系信息失败:', error);
+      }
+    }
+
+    // 打开照片模态框
+    function openPhotoModal(photo) {
+      const photoModal = document.getElementById('photo-modal');
+      const modalImage = document.getElementById('modal-image');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDescription = document.getElementById('modal-description');
+      
+      modalImage.src = photo.image_url;
+      modalImage.alt = photo.title;
+      modalTitle.textContent = photo.title;
+      modalDescription.textContent = photo.description;
+      
+      photoModal.classList.remove('opacity-0', 'invisible');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // 关闭照片模态框
+    const closeModal = document.getElementById('close-modal');
+    const photoModal = document.getElementById('photo-modal');
+    
+    closeModal.addEventListener('click', () => {
+      photoModal.classList.add('opacity-0', 'invisible');
+      document.body.style.overflow = '';
+    });
+    
+    photoModal.addEventListener('click', (e) => {
+      if (e.target === photoModal) {
+        photoModal.classList.add('opacity-0', 'invisible');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // 相册过滤
+    const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+    
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // 更新按钮样式
+        filterBtns.forEach(b => {
+          b.classList.remove('active', 'bg-primary', 'text-white');
+          b.classList.add('bg-gray-200', 'text-gray-700');
+        });
+        btn.classList.add('active', 'bg-primary', 'text-white');
+        btn.classList.remove('bg-gray-200', 'text-gray-700');
+        
+        // 过滤照片
+        const filter = btn.getAttribute('data-filter');
+        fetchPhotos(filter);
+      });
+    });
+
+    // 加载更多照片
+    document.getElementById('load-more').addEventListener('click', () => {
+      alert('加载更多照片功能将在未来版本中实现');
+    });
+
+    // 加载更多故事
+    document.getElementById('load-more-stories').addEventListener('click', () => {
+      alert('加载更多故事功能将在未来版本中实现');
+    });
+
+    // 联系表单
+    const contactForm = document.getElementById('contact-form');
+    
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      if (!name || !email || !subject || !message) {
+        alert('请填写所有字段');
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/contact`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          alert('消息已发送！我们会尽快回复您。');
+          contactForm.reset();
+        } else {
+          alert(data.msg || '发送消息失败，请稍后再试');
+        }
+      } catch (error) {
+        console.error('发送消息失败:', error);
+        alert('发送消息请求失败，请稍后再试');
+      }
+    });
+
+    // 订阅表单
+    const subscribeForm = document.getElementById('subscribe-form');
+    
+    subscribeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = subscribeForm.querySelector('input[type="email"]').value;
+      if (!email) {
+        alert('请输入邮箱地址');
+        return;
+      }
+      alert('订阅成功！我们会定期向您发送家庭动态');
+      subscribeForm.reset();
+    });
+
+    // 日期格式化
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][date.getDay()];
+      return `${year}年${month}月${day}日 ${weekDay}`;
+    }
+
+    // 页面加载完成后获取数据
+    document.addEventListener('DOMContentLoaded', async () => {
+      await fetchFamilyMembers();
+      await fetchPhotos();
+      await fetchEvents();
+      await fetchStories();
+      fetchLatestNews();
+      fetchContactInfo();
+    });
+  </script>
+</body>
+</html>
