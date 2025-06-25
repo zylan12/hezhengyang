@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeZhengyang - 智能运动手表</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #165DFF;
+      --color-secondary: #36CBCB;
+      --color-dark: #1E293B;
+      --color-light: #F8FAFC;
+      --font-inter: 'Inter', sans-serif;
+    }
+    
+    @utility fade-in {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    
+    @utility slide-up {
+      animation: slideUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    body {
+      font-family: var(--font-inter);
+    }
+    
+    .feature-card:hover .feature-icon {
+      transform: translateY(-5px);
+    }
+    
+    .testimonial-slide {
+      transition: transform 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-light text-dark">
+  <!-- 导航栏 -->
+  <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="flex items-center space-x-2">
+        <i class="fas fa-heartbeat text-primary text-2xl"></i>
+        <span class="text-xl font-bold text-dark">HeZhengyang</span>
+      </a>
+      
+      <!-- 桌面导航 -->
+      <div class="hidden md:flex space-x-8">
+        <a href="#features" class="font-medium hover:text-primary transition-colors">功能</a>
+        <a href="#specs" class="font-medium hover:text-primary transition-colors">规格</a>
+        <a href="#testimonials" class="font-medium hover:text-primary transition-colors">用户评价</a>
+        <a href="#pricing" class="font-medium hover:text-primary transition-colors">价格</a>
+      </div>
+      
+      <a href="#buy" class="hidden md:block bg-primary text-white px-6 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-md">
+        立即购买
+      </a>
+      
+      <!-- 移动端菜单按钮 -->
+      <button id="menuBtn" class="md:hidden text-dark focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+      <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+        <a href="#features" class="font-medium py-2 hover:text-primary transition-colors">功能</a>
+        <a href="#specs" class="font-medium py-2 hover:text-primary transition-colors">规格</a>
+        <a href="#testimonials" class="font-medium py-2 hover:text-primary transition-colors">用户评价</a>
+        <a href="#pricing" class="font-medium py-2 hover:text-primary transition-colors">价格</a>
+        <a href="#buy" class="bg-primary text-white px-6 py-3 rounded-full text-center hover:bg-primary/90 transition-colors shadow-md">
+          立即购买
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 英雄区 -->
+  <section class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-10 md:mb-0 slide-up">
+        <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight mb-6">
+          智能运动手表 <br>
+          <span class="text-primary">重新定义健康监测</span>
+        </h1>
+        <p class="text-lg text-gray-600 mb-8 max-w-lg">
+          搭载全新AI健康算法，24小时实时监测心率、血氧和睡眠质量，让运动更科学，生活更健康。
+        </p>
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <a href="#buy" class="bg-primary text-white px-8 py-3 rounded-full text-center hover:bg-primary/90 transition-colors shadow-lg hover:shadow-xl">
+            <i class="fas fa-shopping-cart mr-2"></i>立即购买
+          </a>
+          <a href="#features" class="bg-white text-dark border border-gray-200 px-8 py-3 rounded-full text-center hover:bg-gray-50 transition-colors shadow-md">
+            <i class="fas fa-info-circle mr-2"></i>了解更多
+          </a>
+        </div>
+        <div class="flex items-center mt-10 space-x-6">
+          <div class="flex -space-x-2">
+            <img src="https://picsum.photos/40/40?random=1" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+            <img src="https://picsum.photos/40/40?random=2" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+            <img src="https://picsum.photos/40/40?random=3" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white">
+            <div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-white flex items-center justify-center text-primary font-medium text-sm">
+              500+
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center text-yellow-400 mb-1">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="text-gray-600 ml-2">4.8/5</span>
+            </div>
+            <p class="text-sm text-gray-500">来自500+用户的真实评价</p>
+          </div>
+        </div>
+      </div>
+      <div class="md:w-1/2 fade-in">
+        <div class="relative">
+          <img src="https://picsum.photos/600/800?random=10" alt="HeZhengyang 智能运动手表" class="w-full h-auto rounded-2xl shadow-2xl">
+          <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg fade-in" style="animation-delay: 0.2s">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-bolt text-secondary text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-500">超长续航</p>
+                <p class="font-bold">14天</p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg fade-in" style="animation-delay: 0.4s">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-tint text-primary text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-500">防水等级</p>
+                <p class="font-bold">5ATM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心功能 -->
+  <section id="features" class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold mb-4">
+          全方位健康监测 <span class="text-primary">智能运动助手</span>
+        </h2>
+        <p class="text-lg text-gray-600">
+          从日常活动到专业运动，HeZhengyang为你提供精准的数据支持和科学的运动建议
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 功能卡片1 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up">
+          <div class="feature-icon w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">24小时心率监测</h3>
+          <p class="text-gray-600">
+            采用第四代光学传感器，实时监测心率变化，运动时自动预警，静息时分析心脏健康状态。
+          </p>
+        </div>
+        
+        <!-- 功能卡片2 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up" style="animation-delay: 0.1s">
+          <div class="feature-icon w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-moon"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">睡眠质量分析</h3>
+          <p class="text-gray-600">
+            深入分析浅睡、深睡和REM睡眠阶段，提供睡眠质量评分和改善建议，让你睡得更好。
+          </p>
+        </div>
+        
+        <!-- 功能卡片3 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up" style="animation-delay: 0.2s">
+          <div class="feature-icon w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-location-arrow"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">GPS运动轨迹</h3>
+          <p class="text-gray-600">
+            内置高精度GPS芯片，实时记录运动轨迹、距离和配速，支持跑步、骑行、游泳等80+运动模式。
+          </p>
+        </div>
+        
+        <!-- 功能卡片4 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up" style="animation-delay: 0.3s">
+          <div class="feature-icon w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-lungs"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">血氧饱和度监测</h3>
+          <p class="text-gray-600">
+            随时检测血氧水平，高原旅行或高强度运动时提供重要参考，守护呼吸系统健康。
+          </p>
+        </div>
+        
+        <!-- 功能卡片5 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up" style="animation-delay: 0.4s">
+          <div class="feature-icon w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-battery-full"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">14天超长续航</h3>
+          <p class="text-gray-600">
+            采用低功耗芯片和优化算法，日常使用续航长达14天，重度使用也能坚持7天，告别频繁充电。
+          </p>
+        </div>
+        
+        <!-- 功能卡片6 -->
+        <div class="feature-card bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 slide-up" style="animation-delay: 0.5s">
+          <div class="feature-icon w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center text-secondary text-2xl mb-6 transition-transform duration-300">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">智能通知提醒</h3>
+          <p class="text-gray-600">
+            同步手机通知，来电、短信、社交媒体消息实时提醒，支持快捷回复（部分机型），不错过重要信息。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 产品规格 -->
+  <section id="specs" class="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold mb-4">
+          专业级 <span class="text-primary">硬件配置</span>
+        </h2>
+        <p class="text-lg text-gray-600">
+          每一项配置都经过精心设计，为你带来卓越的使用体验
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <img src="https://picsum.photos/600/800?random=20" alt="HeZhengyang 细节展示" class="w-full h-auto rounded-2xl shadow-xl">
+        </div>
+        
+        <div class="slide-up">
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-xl font-bold mb-2">屏幕显示</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>1.39英寸AMOLED高清触摸屏，326PPI</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>全天候显示，自动亮度调节</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>2.5D弧面玻璃，防刮耐磨</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold mb-2">传感器</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>第四代光学心率传感器</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>血氧饱和度传感器</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>加速度计+陀螺仪+地磁传感器</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>气压海拔传感器</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold mb-2">连接与续航</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>蓝牙5.2，支持双设备连接</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>GPS+GLONASS+北斗三星定位</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>400mAh大容量电池，14天续航</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>磁吸式快充，30分钟充50%</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold mb-2">防护性能</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>5ATM防水等级，支持游泳监测</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>军工级防尘防摔设计</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-primary mt-1 mr-3"></i>
+                  <span>-20℃至50℃工作温度范围</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 用户评价 -->
+  <section id="testimonials" class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold mb-4">
+          用户 <span class="text-primary">真实评价</span>
+        </h2>
+        <p class="text-lg text-gray-600">
+          听听那些已经体验过HeZhengyang的用户怎么说
+        </p>
+      </div>
+      
+      <div class="relative">
+        <div id="testimonialSlider" class="overflow-hidden">
+          <div class="testimonial-wrapper flex transition-transform duration-500">
+            <!-- 评价1 -->
+            <div class="testimonial-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-4">
+              <div class="bg-white p-8 rounded-2xl shadow-md h-full slide-up">
+                <div class="flex items-center text-yellow-400 mb-4">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 mb-6">
+                  "作为一名马拉松爱好者，这款手表的GPS定位非常精准，心率监测也很准确。最让我惊喜的是续航，一次充电能撑过整个训练周期，再也不用每天充电了！"
+                </p>
+                <div class="flex items-center">
+                  <img src="https://picsum.photos/60/60?random=31" alt="用户头像" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-bold">李明</h4>
+                    <p class="text-sm text-gray-500">马拉松爱好者</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 评价2 -->
+            <div class="testimonial-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-4">
+              <div class="bg-white p-8 rounded-2xl shadow-md h-full slide-up" style="animation-delay: 0.1s">
+                <div class="flex items-center text-yellow-400 mb-4">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-600 mb-6">
+                  "睡眠分析功能太实用了！以前总觉得自己睡得不错，看了数据才发现深度睡眠不足。现在根据手表的建议调整了作息，白天精神好多了。界面也很简洁，操作方便。"
+                </p>
+                <div class="flex items-center">
+                  <img src="https://picsum.photos/60/60?random=32" alt="用户头像" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-bold">王芳</h4>
+                    <p class="text-sm text-gray-500">办公室职员</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 评价3 -->
+            <div class="testimonial-slide min-w-full md:min-w-[50%] lg:min-w-[33.333%] px-4">
+              <div class="bg-white p-8 rounded-2xl shadow-md h-full slide-up" style="animation-delay: 0.2s">
+                <div class="flex items-center text-yellow-400 mb-4">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-gray-600 mb-6">
+                  "上个月去西藏旅游，多亏了这块手表的血氧监测功能。在海拔5000米的地方，手表及时提醒我血氧偏低，让我能提前做好准备。防水性能也很好，在纳木错游泳时戴着毫无压力。"
+                </p>
+                <div class="flex items-center">
+                  <img src="https://picsum.photos/60/60?random=33" alt="用户头像" class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <h4 class="font-bold">张伟</h4>
+                    <p class="text-sm text-gray-500">户外探险家</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 滑动控制按钮 -->
+        <button id="prevBtn" class="absolute top-1/2 -left-4 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors z-10">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button id="nextBtn" class="absolute top-1/2 -right-4 transform -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors z-10">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      
+      <!-- 评价指示器 -->
+      <div class="flex justify-center mt-8 space-x-2" id="testimonialDots">
+        <button class="w-3 h-3 rounded-full bg-primary" data-index="0"></button>
+        <button class="w-3 h-3 rounded-full bg-gray-300" data-index="1"></button>
+        <button class="w-3 h-3 rounded-full bg-gray-300" data-index="2"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 价格信息 -->
+  <section id="pricing" class="py-16 md:py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
+    <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+        <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold mb-4">
+          选择适合你的 <span class="text-primary">版本</span>
+        </h2>
+        <p class="text-lg text-gray-600">
+          三种配置，满足不同运动需求和预算
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- 基础版 -->
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden slide-up">
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">基础版</h3>
+            <p class="text-gray-600 mb-6">适合日常健康监测和轻度运动</p>
+            <div class="mb-6">
+              <span class="text-4xl font-bold">¥899</span>
+              <span class="text-gray-500">/起</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>基础心率监测</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>睡眠质量分析</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>30+运动模式</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>7天续航</span>
+              </li>
+              <li class="flex items-start text-gray-400">
+                <i class="fas fa-times mt-1 mr-3"></i>
+                <span>血氧饱和度监测</span>
+              </li>
+              <li class="flex items-start text-gray-400">
+                <i class="fas fa-times mt-1 mr-3"></i>
+                <span>GPS定位</span>
+              </li>
+            </ul>
+            <a href="#buy" class="block w-full bg-gray-100 text-dark px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
+              选择基础版
+            </a>
+          </div>
+        </div>
+        
+        <!-- 专业版 -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform scale-105 border-2 border-primary z-10 slide-up" style="animation-delay: 0.1s">
+          <div class="bg-primary text-white text-center py-2">
+            <span class="font-bold">最受欢迎</span>
+          </div>
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">专业版</h3>
+            <p class="text-gray-600 mb-6">适合运动爱好者和进阶用户</p>
+            <div class="mb-6">
+              <span class="text-4xl font-bold">¥1299</span>
+              <span class="text-gray-500">/起</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>24小时心率监测</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>深度睡眠分析</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>80+运动模式</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>14天超长续航</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>血氧饱和度监测</span>
+              </li>
+              <li class="flex items-start text-gray-400">
+                <i class="fas fa-times mt-1 mr-3"></i>
+                <span>GPS+GLONASS双定位</span>
+              </li>
+            </ul>
+            <a href="#buy" class="block w-full bg-primary text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-primary/90 transition-colors">
+              选择专业版
+            </a>
+          </div>
+        </div>
+        
+        <!-- 旗舰版 -->
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden slide-up" style="animation-delay: 0.2s">
+          <div class="p-8">
+            <h3 class="text-xl font-bold mb-2">旗舰版</h3>
+            <p class="text-gray-600 mb-6">适合专业运动员和户外探险者</p>
+            <div class="mb-6">
+              <span class="text-4xl font-bold">¥1699</span>
+              <span class="text-gray-500">/起</span>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>第四代心率传感器</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>睡眠压力监测</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>100+运动模式</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>14天续航+快充</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>高精度血氧监测</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                <span>GPS+GLONASS+北斗三星定位</span>
+              </li>
+            </ul>
+            <a href="#buy" class="block w-full bg-gray-100 text-dark px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
+              选择旗舰版
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 购买区域 -->
+  <section id="buy" class="py-16 md:py-24">
+    <div class="container mx-auto px-4">
+      <div class="bg-primary rounded-3xl overflow-hidden shadow-2xl">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <div class="p-8 md:p-12 flex flex-col justify-center slide-up">
+            <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-white mb-6">
+              立即拥有 <span class="text-secondary">HeZhengyang</span>
+            </h2>
+            <p class="text-white/80 text-lg mb-8 max-w-lg">
+              现在下单可享受免费送货、2年质保和30天无理由退换服务。加入我们的健康运动社区，开启科学健身之旅。
+            </p>
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start">
+                <i class="fas fa-truck text-secondary mt-1 mr-3"></i>
+                <span class="text-white">全国免费送货上门</span>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-shield-alt text-secondary mt-1 mr-3"></i>
+                <span class="text-white">2年官方质保服务</span>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-undo text-secondary mt-1 mr-3"></i>
+                <span class="text-white">30天无理由退换</span>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-headset text-secondary mt-1 mr-3"></i>
+                <span class="text-white">7×24小时客服支持</span>
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <a href="#" class="bg-white text-primary px-8 py-3 rounded-full text-center font-bold hover:bg-gray-100 transition-colors shadow-lg">
+                <i class="fas fa-shopping-cart mr-2"></i>立即下单
+              </a>
+              <a href="#" class="bg-transparent text-white border border-white/30 px-8 py-3 rounded-full text-center font-medium hover:bg-white/10 transition-colors">
+                <i class="fas fa-phone-alt mr-2"></i>咨询客服
+              </a>
+            </div>
+          </div>
+          <div class="hidden md:block relative fade-in">
+            <img src="https://picsum.photos/600/800?random=30" alt="HeZhengyang 智能运动手表" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-l from-primary/80 to-transparent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-6">
+            <i class="fas fa-heartbeat text-secondary text-2xl"></i>
+            <span class="text-xl font-bold">HeZhengyang</span>
+          </div>
+          <p class="text-gray-400 mb-6">
+            专注于智能穿戴设备研发，为用户提供专业的健康监测和运动辅助解决方案。
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+              <i class="fab fa-weixin text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+              <i class="fab fa-weibo text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+              <i class="fab fa-tiktok text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-secondary transition-colors">
+              <i class="fab fa-instagram text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">快速链接</h4>
+          <ul class="space-y-3">
+            <li><a href="#features" class="text-gray-400 hover:text-secondary transition-colors">产品功能</a></li>
+            <li><a href="#specs" class="text-gray-400 hover:text-secondary transition-colors">规格参数</a></li>
+            <li><a href="#testimonials" class="text-gray-400 hover:text-secondary transition-colors">用户评价</a></li>
+            <li><a href="#pricing" class="text-gray-400 hover:text-secondary transition-colors">价格信息</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">关于我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">支持服务</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">帮助中心</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">常见问题</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">售后服务</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">保修政策</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-secondary transition-colors">联系我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">订阅更新</h4>
+          <p class="text-gray-400 mb-4">
+            订阅我们的 newsletter，获取最新产品信息和促销活动
+          </p>
+          <form class="mb-4">
+            <div class="flex">
+              <input type="email" placeholder="你的邮箱地址" class="px-4 py-2 rounded-l-full w-full focus:outline-none text-dark">
+              <button type="submit" class="bg-secondary text-white px-4 py-2 rounded-r-full hover:bg-secondary/90 transition-colors">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+          <p class="text-gray-500 text-sm">
+            我们尊重你的隐私，不会向第三方分享你的信息
+          </p>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+        <p>© 2025 HeZhengyang. 保留所有权利。</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 移动端菜单切换
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 滚动时导航栏样式变化
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('py-2', 'shadow-md');
+        nav.classList.remove('py-3', 'shadow-sm');
+      } else {
+        nav.classList.add('py-3', 'shadow-sm');
+        nav.classList.remove('py-2', 'shadow-md');
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动端菜单
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+          }
+        }
+      });
+    });
+    
+    // 用户评价轮播
+    const testimonialSlider = document.getElementById('testimonialSlider');
+    const testimonialWrapper = testimonialSlider.querySelector('.testimonial-wrapper');
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const testimonialDots = document.querySelectorAll('#testimonialDots button');
+    
+    let currentIndex = 0;
+    const slideCount = testimonialSlides.length;
+    const isMobile = window.innerWidth < 768;
+    let slideWidth;
+    
+    function updateSlideWidth() {
+      if (window.innerWidth < 768) {
+        slideWidth = 100; // 移动端100%宽度
+      } else if (window.innerWidth < 1024) {
+        slideWidth = 50; // 平板50%宽度
+      } else {
+        slideWidth = 33.333; // 桌面端33.333%宽度
+      }
+      updateSlider();
+    }
+    
+    function updateSlider() {
+      testimonialWrapper.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+      
+      // 更新指示器
+      testimonialDots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('bg-primary');
+          dot.classList.remove('bg-gray-300');
+        } else {
+          dot.classList.add('bg-gray-300');
+          dot.classList.remove('bg-primary');
+        }
+      });
+    }
+    
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+      updateSlider();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slideCount;
+      updateSlider();
+    });
+    
+    testimonialDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentIndex = index;
+        updateSlider();
+      });
+    });
+    
+    // 初始化和窗口调整时更新
+    window.addEventListener('load', updateSlideWidth);
+    window.addEventListener('resize', updateSlideWidth);
+    
+    // 元素滚动显示动画
+    function checkInView() {
+      const elements = document.querySelectorAll('.slide-up, .fade-in');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // 初始化动画样式
+    document.querySelectorAll('.slide-up').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      element.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+    });
+    
+    document.querySelectorAll('.fade-in').forEach(element => {
+      element.style.opacity = '0';
+      element.style.transition = 'opacity 0.8s ease-in-out';
+    });
+    
+    // 滚动时检查
+    window.addEventListener('scroll', checkInView);
+    window.addEventListener('load', checkInView);
+  </script>
+</body>
+</html>
